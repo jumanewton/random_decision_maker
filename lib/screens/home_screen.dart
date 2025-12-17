@@ -52,7 +52,7 @@ class HomeScreen extends StatelessWidget {
   ) {
     return Card(
       elevation: 4,
-      shadowColor: color.withOpacity(0.3),
+      shadowColor: color.withValues(alpha: 0.3),
       child: InkWell(
         onTap: () => Navigator.pushNamed(context, route),
         borderRadius: BorderRadius.circular(16),
@@ -63,7 +63,7 @@ class HomeScreen extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.all(12),
                 decoration: BoxDecoration(
-                  color: color.withOpacity(0.1),
+                  color: color.withValues(alpha: 0.1),
                   shape: BoxShape.circle,
                 ),
                 child: Icon(icon, color: color, size: 32),

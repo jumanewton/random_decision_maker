@@ -81,11 +81,6 @@ class _CoinFlipScreenState extends State<CoinFlipScreen> with SingleTickerProvid
                 // Better approach:
                 // Rotate on X axis.
                 final value = _animation.value;
-                final isUnderHalf = (value / (pi / 2)).floor() % 2 == 0;
-                // Just toggle visuals rapidly? 
-                
-                // Let's stick to a robust simple 3D transform
-                double angle = value;
                 if (!_isHeads) {
                   // If tails, add an extra pi to the rotation so it lands on "back" relative to 0?
                   // Or just set the end state.

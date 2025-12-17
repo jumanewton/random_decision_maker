@@ -110,16 +110,8 @@ class _DiceRollScreenState extends State<DiceRollScreen> with SingleTickerProvid
   Widget _getDiceIcon(int value) {
     // Flutter has looks_one, looks_two etc symbols but they are rounded square icons.
     // They look decent for a dice face.
-    IconData iconData;
-    switch (value) {
-      case 1: iconData = Icons.looks_one_rounded; break;
-      case 2: iconData = Icons.looks_two_rounded; break;
-      case 3: iconData = Icons.looks_3_rounded; break; // Inconsistent naming in flutter sometimes
-      case 4: iconData = Icons.looks_4_rounded; break;
-      case 5: iconData = Icons.looks_5_rounded; break;
-      case 6: iconData = Icons.looks_6_rounded; break;
-      default: iconData = Icons.looks_one_rounded;
-    }
+    // Flutter has looks_one, looks_two etc symbols but they are rounded square icons.
+    // They look decent for a dice face.
     
     // Actually the naming is looks_one, looks_two... looks_3 is not correct, it's looks_3.
     // Let's double check standard names.

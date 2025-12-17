@@ -133,7 +133,7 @@ class _DecisionMakerScreenState extends State<DecisionMakerScreen> {
                             ? Border.all(color: Colors.blueAccent, width: 2)
                             : Border.all(color: Colors.transparent),
                            boxShadow: [
-                             if (!isSelected) BoxShadow(color: Colors.black.withOpacity(0.05), blurRadius: 4, offset: Offset(0,2))
+                             if (!isSelected) BoxShadow(color: Colors.black.withValues(alpha: 0.05), blurRadius: 4, offset: Offset(0,2))
                            ]
                         ),
                         child: ListTile(
