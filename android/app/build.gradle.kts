@@ -9,7 +9,7 @@ plugins {
 }
 
 android {
-    namespace = "com.example.random_decision_maker"
+    namespace = "com.jumanewton.random_decision_maker"
     compileSdk = flutter.compileSdkVersion
     ndkVersion = "29.0.14206865"
 
@@ -24,7 +24,7 @@ android {
 
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
-        applicationId = "com.example.random_decision_maker"
+        applicationId = "com.jumanewton.random_decision_maker"
         // You can update the following values to match your application needs.
         // For more information, see: https://flutter.dev/to/review-gradle-config.
         minSdk = flutter.minSdkVersion
