@@ -24,7 +24,7 @@ class HomeScreen extends StatelessWidget {
             'Coin Flipper',
             'Heads or Tails?',
             Icons.monetization_on_rounded,
-            Colors.amber,
+            Colors.teal,
             '/coin',
           ),
           const SizedBox(height: 20),

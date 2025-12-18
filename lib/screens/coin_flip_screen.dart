@@ -141,8 +141,8 @@ class _CoinFlipScreenState extends State<CoinFlipScreen> with SingleTickerProvid
               child: ElevatedButton(
                 onPressed: _isFlipping ? null : _flipCoin,
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.amber,
-                  foregroundColor: Colors.black,
+                  backgroundColor: Colors.teal,
+                  foregroundColor: Colors.white,
                   elevation: 5,
                 ),
                 child: Text(
@@ -158,23 +158,56 @@ class _CoinFlipScreenState extends State<CoinFlipScreen> with SingleTickerProvid
   }
 
   Widget _buildCoinFace(bool isFront) {
-     // If we are rotating, we might see the "back" of the widget which is mirrored.
-     // But since we switch the widget content based on angle, we are simulating a solid object.
     return Container(
       width: 200,
       height: 200,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
-        color: isFront ? Colors.amber : Colors.grey[300],
-        border: Border.all(width: 8, color: isFront ? Colors.amber[700]! : Colors.grey[500]!),
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: isFront 
+            ? [Colors.teal[300]!, Colors.teal[700]!, Colors.teal[900]!]
+            : [Colors.grey[300]!, Colors.grey[600]!, Colors.grey[800]!],
+        ),
+        border: Border.all(
+          width: 10, 
+          color: isFront ? Colors.teal[100]!.withValues(alpha: 0.5) : Colors.grey[400]!.withValues(alpha: 0.5)
+        ),
         boxShadow: [
-           BoxShadow(color: Colors.black26, blurRadius: 10, offset: Offset(0,5))
+           BoxShadow(
+             color: Colors.black.withValues(alpha: 0.3), 
+             blurRadius: 15, 
+             offset: const Offset(0, 10)
+           ),
+           BoxShadow(
+             color: isFront ? Colors.tealAccent.withValues(alpha: 0.2) : Colors.transparent,
+             blurRadius: 20,
+             spreadRadius: 2,
+           ),
         ],
       ),
       child: Center(
-        child: isFront 
-          ? const Icon(Icons.monetization_on, size: 100, color: Colors.white)
-          : const Icon(Icons.remove_circle_outline, size: 100, color: Colors.grey),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(
+              isFront ? Icons.monetization_on : Icons.stars_rounded, 
+              size: 80, 
+              color: Colors.white.withValues(alpha: 0.9)
+            ),
+            const SizedBox(height: 8),
+            Text(
+              isFront ? 'HEADS' : 'TAILS',
+              style: TextStyle(
+                color: Colors.white.withValues(alpha: 0.9),
+                fontWeight: FontWeight.bold,
+                letterSpacing: 2,
+                fontSize: 18,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
