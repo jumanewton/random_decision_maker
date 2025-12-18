@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'dart:math';
+import '../services/history_service.dart';
 
 class CoinFlipScreen extends StatefulWidget {
   const CoinFlipScreen({super.key});
@@ -13,6 +15,7 @@ class _CoinFlipScreenState extends State<CoinFlipScreen> with SingleTickerProvid
   late Animation<double> _animation;
   bool _isHeads = true;
   bool _isFlipping = false;
+  final HistoryService _historyService = HistoryService();
 
   @override
   void initState() {
@@ -36,18 +39,27 @@ class _CoinFlipScreenState extends State<CoinFlipScreen> with SingleTickerProvid
     });
   }
 
-  void _flipCoin() {
+  void _flipCoin() async {
     if (_isFlipping) return;
+    
+    final result = Random().nextBool();
+    
     setState(() {
       _isFlipping = true;
-      // Determine result before flip starts, update visual at the end or halfway? 
-      // Actually with simple rotation, visual update at end is jarring.
-      // Better: Update state immediately, but the rotation makes it blur.
-      // Simpler approach: Just spin, and when stopping, land on the result.
-      // But 3D rotation requires Transform.
-      _isHeads = Random().nextBool();
+      _isHeads = result;
     });
-    _controller.forward(from: 0);
+
+    HapticFeedback.lightImpact();
+    _controller.forward(from: 0).then((_) async {
+       // Save to history
+       await _historyService.saveResult(HistoryItem(
+         title: 'Coin Flip',
+         result: _isHeads ? 'Heads' : 'Tails',
+         timestamp: DateTime.now(),
+         type: 'coin',
+       ));
+       HapticFeedback.mediumImpact();
+    });
   }
 
   @override

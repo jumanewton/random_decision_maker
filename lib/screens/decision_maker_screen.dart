@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'dart:math';
+import '../services/history_service.dart';
 
 class DecisionMakerScreen extends StatefulWidget {
   const DecisionMakerScreen({super.key});
@@ -13,6 +15,7 @@ class _DecisionMakerScreenState extends State<DecisionMakerScreen> {
   final TextEditingController _textController = TextEditingController();
   String? _selectedOption;
   bool _isChoosing = false;
+  final HistoryService _historyService = HistoryService();
 
   void _addOption() {
     if (_textController.text.trim().isNotEmpty) {
@@ -33,18 +36,31 @@ class _DecisionMakerScreenState extends State<DecisionMakerScreen> {
     });
 
     // Simulate a "thinking" process by cycling through options randomly
-    int cycles = 10;
+    int cycles = 15;
     for (int i = 0; i < cycles; i++) {
-      await Future.delayed(Duration(milliseconds: 100 + (i * 20))); // Slow down
+      await Future.delayed(Duration(milliseconds: 50 + (i * 10))); // Slow down
       if (!mounted) return;
+      HapticFeedback.selectionClick();
       setState(() {
         _selectedOption = _options[Random().nextInt(_options.length)];
       });
     }
 
+    final finalDecision = _options[Random().nextInt(_options.length)];
+
     setState(() {
+      _selectedOption = finalDecision;
       _isChoosing = false;
     });
+
+    // Save to history
+    await _historyService.saveResult(HistoryItem(
+      title: 'Choice Picker (${_options.length} options)',
+      result: finalDecision,
+      timestamp: DateTime.now(),
+      type: 'decision',
+    ));
+    HapticFeedback.vibrate();
     
     // Show a result dialog or snackbar? 
     // The visual highlighting is nice, but a dialog confirms it.

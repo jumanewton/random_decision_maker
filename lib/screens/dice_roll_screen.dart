@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'dart:math';
+import '../services/history_service.dart';
 
 class DiceRollScreen extends StatefulWidget {
   const DiceRollScreen({super.key});
@@ -12,6 +14,7 @@ class _DiceRollScreenState extends State<DiceRollScreen> with SingleTickerProvid
   late AnimationController _controller;
   int _currentValue = 1;
   bool _isRolling = false;
+  final HistoryService _historyService = HistoryService();
 
   @override
   void initState() {
@@ -24,6 +27,9 @@ class _DiceRollScreenState extends State<DiceRollScreen> with SingleTickerProvid
     _controller.addListener(() {
       // Rapidly change numbers while "rolling" to give effect
       if (_controller.isAnimating) {
+         if (_controller.value * 10 % 1 < 0.1) {
+            HapticFeedback.selectionClick();
+         }
          setState(() {
            _currentValue = Random().nextInt(6) + 1;
          });
@@ -44,13 +50,22 @@ class _DiceRollScreenState extends State<DiceRollScreen> with SingleTickerProvid
     setState(() {
       _isRolling = true;
     });
-    // Spin animation or shake?
-    // Let's just run the controller forward and back to loop a bit? No, just forward.
-    _controller.forward(from: 0).then((_) {
-       // Final legitimate roll
+    
+    _controller.forward(from: 0).then((_) async {
+       final finalValue = Random().nextInt(6) + 1;
        setState(() {
-         _currentValue = Random().nextInt(6) + 1;
+         _currentValue = finalValue;
+         _isRolling = false;
        });
+       
+       // Save to history
+       await _historyService.saveResult(HistoryItem(
+         title: 'Dice Roll',
+         result: finalValue.toString(),
+         timestamp: DateTime.now(),
+         type: 'dice',
+       ));
+       HapticFeedback.heavyImpact();
     });
   }
 

@@ -6,7 +6,15 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Random Decisions')),
+      appBar: AppBar(
+        title: const Text('Random Decisions'),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.history_rounded),
+            onPressed: () => Navigator.pushNamed(context, '/history'),
+          ),
+        ],
+      ),
       body: ListView(
         padding: const EdgeInsets.all(20),
         children: [
@@ -36,6 +44,15 @@ class HomeScreen extends StatelessWidget {
             Icons.checklist_rounded,
             Colors.blueAccent,
             '/decision',
+          ),
+          const SizedBox(height: 20),
+          _buildMenuCard(
+            context,
+            'Random Number',
+            'Min to Max',
+            Icons.pin_outlined,
+            Colors.purpleAccent,
+            '/rng',
           ),
         ],
       ),
