@@ -5,6 +5,7 @@ import 'screens/dice_roll_screen.dart';
 import 'screens/decision_maker_screen.dart';
 import 'screens/rng_screen.dart';
 import 'screens/history_screen.dart';
+import 'screens/feedback_screen.dart';
 
 void main() {
   runApp(const RandomDecisionMakerApp());
@@ -83,6 +84,7 @@ class RandomDecisionMakerApp extends StatelessWidget {
         '/decision': (context) => const DecisionMakerScreen(),
         '/rng': (context) => const RngScreen(),
         '/history': (context) => const HistoryScreen(),
+        '/feedback': (context) => const FeedbackScreen(),
       },
     );
   }
